@@ -1,0 +1,32 @@
+name: Docker Build CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: assignment2-docker-ci
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Build image
+        run: docker build -t devops-app:ci .
+
+      - name: Test health endpoint
+        run: |
+          docker run -d --name flask-test -p 5000:5000 devops-app:ci
+          for i in $(seq 1 10); do
+            if curl -fs http://localhost:5000/health; then
+              docker rm -f flask-test
+              exit 0
+            fi
+            sleep 2
+          done
+          docker logs flask-test
+          docker rm -f flask-test
+          exit 1

@@ -60,9 +60,17 @@ Bugs and fixes:
 
 1. **`FORM` typo instead of `FROM`** - Docker rejects line 1 at build time (`unknown instruction: FORM`). Fixed to `FROM python:3.12-slim`.
 2. **`requirement.txt` missing the `s`** - `pip install` fails because the file in the repo is `requirements.txt`. Fixed to `RUN pip install -r requirements.txt` (using `--no-cache-dir`).
-3. **Wrong container port in `-p 5000:8080`** - `-p HOST:CONTAINER` forwards host port `5000` to container port `8080`, while Flask listens on `5000`, so `curl localhost:5000/health` gets an empty reply. Fixed to `docker run -p 5000:5000` and documented with `EXPOSE 5000`.
+3. **Wrong container port in `-p 5000:8080`** - `-p HOST:CONTAINER` forwards host port `5000` to container port `8080`, while Flask listens on `5000`, so `curl localhost:5000/health` fails with a reset/aborted connection. Fixed to `docker run -p 5000:5000` and documented with `EXPOSE 5000`.
 
 Beyond those three bugs, the `Dockerfile` here also copies `requirements.txt` before `app.py` for layer caching (instead of `COPY . .`) and switches to a non-root user.
+
+### Before Fix (Teammate's Setup)
+
+![Before Fix Terminal Output](./screenshots/before-fix.png)
+
+### After Fix (Working Container & `/health`)
+
+![After Fix Terminal Output](./screenshots/after-fix.png)
 
 ## Bonus
 

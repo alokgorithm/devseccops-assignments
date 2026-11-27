@@ -11,8 +11,8 @@ Basic shell scripts for system monitoring and Nginx/Apache access log analysis.
 ## Usage
 
 ```bash
-git clone https://github.com/alokgorithm/assignment1-linux-scripting.git
-cd assignment1-linux-scripting
+git clone https://github.com/alokgorithm/devseccops-assignments.git
+cd devseccops-assignments/assignment1-linux-scripting
 chmod +x sysinfo.sh log_report.sh
 
 ./sysinfo.sh
@@ -54,7 +54,7 @@ Top 5 processes by memory:
       1 root      0.0  5.1 bash
      18 root      0.0  0.0 su
 
-Saved to /home/alok/assignment1-linux-scripting/sysinfo_2026-11-26.txt
+Saved to /home/alok/devseccops-assignments/assignment1-linux-scripting/sysinfo_2026-11-26.txt
 ```
 
 `./log_report.sh sample.log`:
@@ -77,5 +77,5 @@ Top 3 IP addresses:
 - Hourly cron line (`crontab -e`) to run `sysinfo.sh` automatically:
 
 ```cron
-0 * * * * /home/alok/assignment1-linux-scripting/sysinfo.sh >/dev/null 2>&1
+0 * * * * /home/alok/devseccops-assignments/assignment1-linux-scripting/sysinfo.sh >/dev/null 2>&1
 ```

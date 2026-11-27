@@ -1,14 +1,15 @@
 # Flask App with Docker and GitHub Actions
 
-![Docker Build CI](https://github.com/alokgorithm/assignment2-docker-ci/actions/workflows/build.yml/badge.svg)
+![Docker Build CI](https://github.com/alokgorithm/devseccops-assignments/actions/workflows/build.yml/badge.svg)
 
 Simple Flask service (`/` and `/health`) packaged with Docker and checked on every push using GitHub Actions.
 
 ## Running Locally
 
-Build and start the container:
+Build and start the container from the `assignment2-docker-ci/` folder:
 
 ```bash
+cd assignment2-docker-ci
 docker build -t devops-app .
 docker run -d --name devops-app -p 5000:5000 devops-app
 ```
@@ -34,10 +35,10 @@ docker rm -f devops-app
 
 ## CI Workflow
 
-`.github/workflows/build.yml` runs on every push and pull request:
+[`.github/workflows/build.yml`](../.github/workflows/build.yml) at the repository root runs on every push and pull request:
 
 1. Checks out the repository.
-2. Builds the Docker image (`devops-app:ci`).
+2. Builds the Docker image (`devops-app:ci`) inside `assignment2-docker-ci/`.
 3. Starts the container on port 5000 and retries `curl -fs http://localhost:5000/health`, printing container logs if the check fails.
 
 ## Task 4: Bugs Found and Fixes
@@ -74,6 +75,6 @@ Beyond those three bugs, the `Dockerfile` here also copies `requirements.txt` be
 
 ## Bonus
 
-- `.dockerignore` excludes `.git`, `.github`, `__pycache__`, and markdown files from the build context.
+- `.dockerignore` excludes `.git`, `.github`, `__pycache__`, `*.md`, and `screenshots` from the build context.
 - Container runs as a non-root user (`appuser`) instead of `root`.
 - CI workflow runs the built container and calls `/health`, failing the job if it doesn't respond.
